@@ -8,10 +8,20 @@ generator client {
   provider = "prisma-client-js"
 }
 
+
+
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String   @id @default(uuid()) // Unique student ID
+  fullName       String   // Full name of the student
+  email          String   @unique // Email address (must be unique)
+  dateOfBirth    DateTime // Date of birth for identification
+  studentNumber  String   @unique // Institution-assigned student number
+  qrSignature    String   // Latest QR code signature for identification
+  qrTimestamp    DateTime // Timestamp of QR code generation
+  program        String   // Academic program or course of study
+  yearOfStudy    Int      // Current year of study
+  createdAt      DateTime @default(now()) // Record creation time
+  updatedAt      DateTime @updatedAt      // Auto-updated timestamp
 }
+
+
