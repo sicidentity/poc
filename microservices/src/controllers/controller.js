@@ -50,7 +50,23 @@ class QrController {
         return res.status(400).json({ error: "QR code expired" });
       }
 
-      return res.json({ success: true, user: { id: user.id, name: user.name } });
+      return res.json({
+        success: true,
+        user: {
+          id: user.id,
+          fullName: user.fullName,  // Returning full name of the user
+          email: user.email,        // Returning email address
+          dateOfBirth: user.dateOfBirth,  // Returning date of birth
+          studentNumber: user.studentNumber,  // Returning student number
+          // qrSignature: user.qrSignature,  // Returning QR signature
+          // qrTimestamp: user.qrTimestamp,  // Returning QR timestamp
+          program: user.program,    // Returning program/course of study
+          yearOfStudy: user.yearOfStudy,  // Returning current year of study
+          nin: user.nin,            // Returning NIN (National Identification Number)
+          createdAt: user.createdAt,  // Created timestamp
+          updatedAt: user.updatedAt,  // Updated timestamp
+        },
+      });
     } catch (err) {
       console.error("Error validating QR code:", err);
       return res.status(400).json({ error: "Invalid QR code or decryption failed" });

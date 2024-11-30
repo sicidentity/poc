@@ -10,6 +10,7 @@ generator client {
 
 
 
+
 model User {
   id             String   @id @default(uuid()) // Unique student ID
   fullName       String   // Full name of the student
@@ -20,8 +21,24 @@ model User {
   qrTimestamp    DateTime // Timestamp of QR code generation
   program        String   // Academic program or course of study
   yearOfStudy    Int      // Current year of study
+  nin            Nin?     @relation // One-to-one relation with NIN
   createdAt      DateTime @default(now()) // Record creation time
   updatedAt      DateTime @updatedAt      // Auto-updated timestamp
 }
+
+model Nin {
+  id                String   @id @default(uuid()) // Unique ID for NIN record
+  ninNumber         String   @unique // The National Identification Number (unique)
+  registrationDate  DateTime // Date of NIN registration
+  registrationLocation String // Location of registration
+  user              User?    @relation(fields: [userId], references: [id]) // One-to-one relationship with User
+  userId            String?  @unique // Foreign key to User model
+
+  createdAt         DateTime @default(now()) // Creation timestamp
+  updatedAt         DateTime @updatedAt      // Updated timestamp
+}
+
+
+
 
 
