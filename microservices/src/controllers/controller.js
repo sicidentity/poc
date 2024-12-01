@@ -58,8 +58,8 @@ class QrController {
           email: user.email,        // Returning email address
           dateOfBirth: user.dateOfBirth,  // Returning date of birth
           studentNumber: user.studentNumber,  // Returning student number
-          // qrSignature: user.qrSignature,  // Returning QR signature
-          // qrTimestamp: user.qrTimestamp,  // Returning QR timestamp
+          // qrSignature: user.qrSignature,  // Returning QR signature ///  SHOULD NOT BE SHOWN   SENSITIVE  INFO!!!!
+          // qrTimestamp: user.qrTimestamp,  // Returning QR timestamp  //   SHOULD NOT BE SHOWN   SENSITIVE  INFO!!!!
           program: user.program,    // Returning program/course of study
           yearOfStudy: user.yearOfStudy,  // Returning current year of study
           nin: user.nin,            // Returning NIN (National Identification Number)
