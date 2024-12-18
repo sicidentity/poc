@@ -1,16 +1,18 @@
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, Image, View, Button, TouchableOpacity } from 'react-native'
-import { Link } from 'expo-router'
+import React from 'react';
+import { View, Text } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
 
-import '../global.css'
-
-const Details = () => {
+export default function Details() {
+  const { qrData } = useLocalSearchParams<{ qrData: string }>();
 
   return (
-    <SafeAreaView className="w-full flex justify-center items-center h-full px-4 bg-[#fff]">
-      
-    </SafeAreaView>
-  )
+    <View className="flex-1 justify-center items-center p-4">
+      <Text className="text-xl font-bold mb-4">
+        Scanned QR Code Details
+      </Text>
+      <Text className="text-base">
+        {qrData || 'No data found'}
+      </Text>
+    </View>
+  );
 }
-
-export default Details;
