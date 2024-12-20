@@ -1,1 +1,7 @@
 ui/venv/
+*/node_modules/
+*/__pycache__
+poc\mobile_apps\native_inspect\node_modules
+mobile_apps/native_inspect/node_modules/*
+mobile_apps/native_user/node_modules/*
+node_modules/

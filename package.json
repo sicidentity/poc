@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "jimp": "^1.6.0",
+    "jsqr": "^1.4.0",
+    "node-fetch": "^2.7.0",
+    "qrcode-reader": "^1.0.4"
+  }
+}
