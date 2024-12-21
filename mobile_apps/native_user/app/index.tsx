@@ -1,53 +1,86 @@
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, Image, View, Button, Pressable, } from 'react-native'
-import { Link } from 'expo-router'
-import { useCameraPermissions } from "expo-camera";
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { API_URL } from '../config';
+import { router } from 'expo-router';
 
-import '../global.css'
+const LoginScreen = () => {
+  const [userId, setUserId] = useState('');
+  console.log("Called")
 
-const Welcome = () => {
-  const [permission, requestPermission] = useCameraPermissions();
-  const isPermissionGranted = Boolean(permission?.granted);
+  const handleLogin = async () => {
+    console.log(userId);
+    try {
+      const response = await fetch(`${API_URL}/users/${userId}`);
+      const data = await response.json();
+      console.log(data)
+
+      if (response.ok) {
+        // Using Expo Router navigation
+        router.replace('/profile');
+      } else {
+        Alert.alert('Error', data.error || 'Invalid user ID');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Failed to connect to server');
+    }
+  };
+
   return (
-    <SafeAreaView className="w-full flex justify-center items-center h-full px-4 bg-[#fff]">
-      <Image
-        source={require('../assets/images/image 3.png')}
-        className="w-[16rem] h-[16rem]"
-        resizeMode="contain"
+    <View style={styles.container}>
+      <Text style={styles.title}>Student Login</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Enter Student ID"
+        value={userId}
+        onChangeText={setUserId}
+        autoCapitalize="none"
       />
-      <View className="flex flex-row w-[100%] justify-around mt-[3rem]">
-        <Link 
-          className="bg-[#18171D] rounded-[8px] p-3"
-          href='/generate'
-        >
-          <Text className="text-[#f5fff9] text-center">
-            Generate QR Code
-          </Text>
-        </Link>
+      <TouchableOpacity 
+        style={styles.button}
+        onPress={handleLogin}
+      >
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
-        <Link 
-          className="bg-[#18171D] rounded-[8px] p-3"
-          href='/scan'
-          asChild
-        >
-          <Pressable disabled={!isPermissionGranted}>
-            <Text
-              className="text-[#f5fff9] text-center"
-              style={[
-                {
-                  opacity: !isPermissionGranted ? 0.5 : 1
-                }
-              ]}>
-              Scan QR Code
-            </Text>
-          </Pressable>
-        </Link>
-      </View>
-      <Pressable onPress={requestPermission}>
-        <Text className="mt-[1rem] text-[#9d9d9d]">Request Permissions </Text>
-      </Pressable>
-    </SafeAreaView>
-  )
-}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 30,
+  },
+  input: {
+    width: '100%',
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    marginBottom: 20,
+    fontSize: 16,
+  },
+  button: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#000',
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
 
-export default Welcome;
+export default LoginScreen;

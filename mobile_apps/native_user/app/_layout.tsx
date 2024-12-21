@@ -30,11 +30,19 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="generate" options={{ headerShown: false }} />
-        <Stack.Screen name="scan" options={{ headerShown: false }} />
-        <Stack.Screen name="details" options={{ headerShown: false }} />
+        <Stack.Screen 
+          name="profile" 
+          options={{ 
+            headerShown: false,
+          }} 
+        />
+        <Stack.Screen 
+          name="qrcode" 
+          options={{ 
+            headerShown: false,
+          }} 
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
