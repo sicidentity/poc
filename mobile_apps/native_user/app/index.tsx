@@ -12,7 +12,7 @@ const LoginScreen = () => {
     try {
       const response = await fetch(`${API_URL}/users/${userId}`);
       const data = await response.json();
-      console.log(data)
+      console.log('data', data)
 
       if (response.ok) {
         // Using Expo Router navigation
