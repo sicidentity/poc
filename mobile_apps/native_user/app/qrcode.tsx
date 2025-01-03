@@ -6,7 +6,7 @@ import { Stack } from 'expo-router';
 
 const QRCodeScreen = () => {
   const params = useLocalSearchParams();
-  const userId = params.userId || 'dbbb8ed1-a2b1-40a2-b0e8-847a350651a3';
+  const userId = params.userId || 'a12f1abc-a2e4-49b6-a7a7-3972c6799c41';
   const [qrCode, setQrCode] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
   const [loading, setLoading] = useState(false);

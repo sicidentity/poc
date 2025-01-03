@@ -5,7 +5,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 
 const ProfileScreen = () => {
   const [userData, setUserData] = useState(null);
-  const userId = 'd4a840fd-f8dc-4469-aaa7-a8c313726f04'; // Using the test user ID
+  const userId = 'a12f1abc-a2e4-49b6-a7a7-3972c6799c41'; // Using the test user ID
 
   useEffect(() => {
     fetchUserData();
