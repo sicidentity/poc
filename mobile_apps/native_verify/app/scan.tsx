@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button, ActivityIndicator } from 'react-native';
-import { Camera } from 'expo-camera';
+import { CameraView, useCameraPermissions } from 'expo-camera';
 import { router, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { API_URL } from '../config';
 
 const ScanScreen = () => {
-  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [hasPermission, setHasPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const params = useLocalSearchParams();
   const officerId = params.officerId;
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
-  }, []);
 
   const handleVerification = async (data: string) => {
     setIsVerifying(true);
@@ -34,10 +27,11 @@ const ScanScreen = () => {
       });
 
       const result = await response.json();
+      console.log('testing handleverificatiion', result)
 
       if (response.ok) {
         router.push({
-          pathname: "/id_verify",
+          pathname: "/user_details",
           params: result
         });
       } else {
@@ -67,17 +61,11 @@ const ScanScreen = () => {
     );
   }
 
-  if (hasPermission === false) {
+  if (!hasPermission.granted) {
     return (
       <SafeAreaView style={styles.container}>
         <Text style={styles.text}>No access to camera</Text>
-        <Button 
-          title="Request Permission Again" 
-          onPress={async () => {
-            const { status } = await Camera.requestCameraPermissionsAsync();
-            setHasPermission(status === 'granted');
-          }} 
-        />
+        <Button onPress={setHasPermission} title="grant permission" />
       </SafeAreaView>
     );
   }
@@ -85,9 +73,12 @@ const ScanScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.camera}>
-        <Camera
+        <CameraView
           style={StyleSheet.absoluteFillObject}
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          onBarcodeScanned={handleBarCodeScanned}
+          barcodeScannerSettings={{
+            barcodeTypes: ["qr"],
+          }}
         >
           <View style={styles.overlay}>
             <View style={styles.scanArea} />
@@ -101,7 +92,7 @@ const ScanScreen = () => {
               <Button title="Tap to Scan Again" onPress={() => setScanned(false)} />
             )}
           </View>
-        </Camera>
+        </CameraView>
       </View>
     </SafeAreaView>
   );
